@@ -52,34 +52,25 @@ button { -webkit-appearance:none; appearance:none; background:transparent; borde
   animation: shimmer 2.6s linear infinite;
 }
 
-.press { transition:transform 130ms cubic-bezier(.2,.8,.2,1), box-shadow 200ms ease, background 180ms ease, border-color 180ms ease, opacity 180ms ease, filter 180ms ease; }
-.press:active { transform:scale(.955); filter:brightness(.975); }
-.lift { transition:transform 200ms cubic-bezier(.2,.85,.25,1), box-shadow 240ms ease; }
+.press { transition: transform 110ms ease-out, opacity 110ms ease-out; }
+.press:active { transform:scale(.97); opacity:.82; }
+.lift { transition:transform 110ms ease-out; }
 .lift:active { transform:translateY(1px); }
 
 @keyframes glowBreathe { 0%,100% { box-shadow: 0 10px 22px rgba(15,23,34,0.14), inset 0 1px 0 rgba(255,255,255,0.95); } 50% { box-shadow: 0 16px 30px rgba(15,23,34,0.18), inset 0 1px 0 rgba(255,255,255,0.98); } }
 .glow-breathe { animation: glowBreathe 3s ease-in-out infinite; }
 
-/* V13: deliberately visible tap feedback on every interactive button.
-   Starts on contact and remains briefly visible after release. */
-button:not(:disabled) { touch-action: manipulation; }
-button:not(:disabled).tap-down {
-  transform: scale(.86) translateY(2px) !important;
-  filter: brightness(.79) saturate(1.16) !important;
-  outline: 2px solid rgba(35,102,154,.35);
-  outline-offset: 2px;
-  transition-duration: 65ms !important;
+
+/* V14: immediate, lightweight touch feedback. No JS timers, reflows or bounce. */
+button:not(:disabled) {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 110ms ease-out, opacity 110ms ease-out;
 }
-@keyframes tapConfirmedPulse {
-  0% { transform:scale(.87); filter: brightness(.72) saturate(1.18); }
-  38% { transform:scale(1.045); filter:brightness(1.14) saturate(1.1); }
-  69% { transform:scale(.975); filter:brightness(.98); }
-  100% { transform:scale(1); filter:brightness(1); }
-}
-button.tap-confirmed {
-  animation:tapConfirmedPulse 470ms cubic-bezier(.22,.83,.27,1) both !important;
+button:not(:disabled):active {
+  transform: scale(.97);
+  opacity: .82;
 }
 @media (prefers-reduced-motion: reduce) {
-  button.tap-confirmed { animation-duration:140ms !important; }
-  button:not(:disabled).tap-down { transform:scale(.97) !important; }
+  button:not(:disabled) { transition-duration: 0ms; }
 }

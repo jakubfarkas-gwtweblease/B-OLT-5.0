@@ -643,8 +643,6 @@ const App = () => {
   const toolsRef = useRef(null);
   const fileRef = useRef(null);
 
-  // Global tactile visual feedback for every button, including the keypad and popups.
-  // The short tap-confirmed animation remains visible after the finger is lifted.
   useEffect(() => {
     const down = (event) => {
       const button = event.target.closest && event.target.closest('button');
